@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 public static class ArraysTester {
     /// <summary>
     /// Entry point for the tests
@@ -38,8 +40,27 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        /*---------------method plan--------------
+            1. declare dynamic array variable
+            2. declare multiple value variable as 1.
+            3. do while loop with the condition being the length of the array is less than length+1
+            4. inside the loop 
+                a)multiply the number by the multiple value
+                b)add the result to the array
+                c)increment the multiple value by 1
+            5. convert list to double array
+            5. return new array */
 
-        return new double[0]; // replace this return statement with your own
+        var multList = new List<double>();
+        double xValue = 1;
+        do
+        {
+           double multiple = number * xValue;
+           multList.Add(multiple);
+           xValue++;            
+        } while (xValue < length+1);
+        double[] multArray = multList.ToArray();
+        return multArray;
     }
     
     /// <summary>
@@ -56,6 +77,36 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-
+        /*
+        solution steps:
+        1. set variable original list count.
+        2. if statement to determin how far to the right index 0 value has to be moved. 
+            A) is the amount less than the data.count
+                i. yes- 
+                    a) find starting index by subtracting amount from data count.
+                    b) get range from starting index from last step to the end of list and save as a new list.
+                    c) insert new list into data at index 0
+                    d) remove range that includes new list from the end.
+                ii. no-
+                    a) subtract data.count from amount to get the amount to rotate.
+                    b) find starting index by subtracting new amount from data count.
+                    b) get range from starting index from last step to the end of list and save as a new list.
+                    c) insert new list into data at index 0.
+                    d) remove range starting at original count until end of list
+        */
+        int originalCount = data.Count;
+        if (amount < data.Count)
+        {
+            int startIndex = data.Count - amount;
+            List<int> newList = data.GetRange(startIndex, data.Count - startIndex);
+            data.InsertRange(0, newList);
+            data.RemoveRange(originalCount, data.Count-originalCount);
+        } else {
+            int newAmount = amount - data.Count;
+            int startIndex = data.Count - newAmount;
+            List<int> newList = data.GetRange(startIndex, data.Count - startIndex);
+            data.InsertRange(0, newList);
+            data.RemoveRange(originalCount, data.Count - originalCount);
+        }
     }
 }

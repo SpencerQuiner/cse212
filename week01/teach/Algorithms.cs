@@ -44,7 +44,7 @@ public static class Algorithms {
     /// of work done in the function.  When the function is 
     /// done the count is returned.
     /// </summary>
-    /// <param name="size">the amount of work to do</param>
+    /// <param name="size">the amount of work to do</param> O(n)
     private static int Algorithm1(int size) {
         var count = 0;
         for (var i = 0; i < size; ++i)
@@ -58,7 +58,7 @@ public static class Algorithms {
     /// of work done in the function.  When the function is 
     /// done the count is returned.
     /// </summary>
-    /// <param name="size">the amount of work to do</param>
+    /// <param name="size">the amount of work to do</param> O(n^2)
     private static int Algorithm2(int size) {
         var count = 0;
         for (var i = 0; i < size; ++i)
@@ -73,7 +73,7 @@ public static class Algorithms {
     /// of work done in the function.  When the function is 
     /// done the count is returned.
     /// </summary>
-    /// <param name="size">the amount of work to do</param>
+    /// <param name="size">the amount of work to do</param> O(log n)
     private static int Algorithm3(int size) {
         var count = 0;
         var start = 0;
