@@ -12,10 +12,13 @@
         players.AddPerson("Bob", 2);
         players.AddPerson("Tim", 5);
         players.AddPerson("Sue", 3);
-        // Console.WriteLine(players);    // This can be un-commented out for debug help
+        //Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+
+        /* Defect(s) Found: 
+        sequence of the result is reversed from expected. - the Enqueue function was inserting the new person at index 0, change it to insert at index Length.
+        */
 
         Console.WriteLine("---------");
 
@@ -31,6 +34,7 @@
         for (int i = 0; i < 5; i++) {
             players.GetNextPerson();
             // Console.WriteLine(players);
+            Console.WriteLine(i);
         }
 
         players.AddPerson("George", 3);
@@ -38,7 +42,10 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        /* Defect(s) Found: 
+        getnextperson only ran five times. This was caused by the enqueue function inserting the new person at the front of the queue instead of the end.
+        george was added early. This was fixed by the update to the Enqueue function.
+        */
 
         Console.WriteLine("---------");
 
@@ -56,7 +63,11 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        /* Defect(s) Found: 
+        The function keeping them on the list forever didn't work. , added else if to getNextperson function adding persons with 0 or less back to the Queue.
+        called no one in the queue when it should not have. called no one in the queue because it removed Tim when it shouldn't have. 
+        names were in the wrong order - caused by issue with Enqueue function.
+        */
 
         Console.WriteLine("---------");
 
@@ -73,7 +84,11 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        /* Defect(s) Found: 
+        did not run 10 times -Tim should not have been removed, added else if to getNextperson function adding persons with 0 or less back to the Queue.
+        names out of expected order.-caused by issue with Enqueue function.
+        called no one in the queue when it should not have - caused by removing Tim from the queue when he should have been forever.
+        */
 
         Console.WriteLine("---------");
 
@@ -83,6 +98,8 @@
         Console.WriteLine("Test 5");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
-        // Defect(s) Found:
+        /* Defect(s) Found: 
+        This one functioned as it should.
+        */
     }
 }

@@ -9,7 +9,6 @@
 /// </summary>
 public class TakingTurnsQueue {
     private readonly PersonQueue _people = new();
-
     public int Length => _people.Length;
 
     /// <summary>
@@ -17,6 +16,7 @@ public class TakingTurnsQueue {
     /// </summary>
     /// <param name="name">Name of the person</param>
     /// <param name="turns">Number of turns remaining</param>
+
     public void AddPerson(string name, int turns) {
         var person = new Person(name, turns);
         _people.Enqueue(person);
@@ -29,17 +29,20 @@ public class TakingTurnsQueue {
     /// person has an infinite number of turns.  An error message is displayed 
     /// if the queue is empty.
     /// </summary>
+
     public void GetNextPerson() {
-        if (_people.IsEmpty())
+        if (_people.IsEmpty()){
             Console.WriteLine("No one in the queue.");
+        }
         else {
             Person person = _people.Dequeue();
             if (person.Turns > 1) {
-                person.Turns -= 1;
+            person.Turns -= 1;
+            _people.Enqueue(person);
+            } else if(person.Turns <= 0) {
                 _people.Enqueue(person);
             }
-
-            Console.WriteLine(person.Name);
+            Console.WriteLine($"{person.Name}");
         }
     }
 

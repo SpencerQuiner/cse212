@@ -22,3 +22,16 @@
         return stack.Count == 0;
     }
 }
+
+/*takes a string as a parameter
+creates and new stack of characters.
+for each character determines if it is  a (,[, { it pushes it to the stack.
+else returns false if stack.count is zero or last character is a parenthesis. etc.
+
+(a == 3 or (b == 5 and c == 6))
+
+stack (,(
+(students]i].Grade > 80 and students[i].Grade < 90)
+stack= (,*/
+
+(robot[id + 1].Execute(.Pass() || (!robot[id * (2 + i)].Alive && stormy) || (robot[id - 1].Alive && lavaFlowing))
