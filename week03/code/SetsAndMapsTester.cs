@@ -1,7 +1,9 @@
 using System.Text.Json;
 
-public static class SetsAndMapsTester {
-    public static void Run() {
+public static class SetsAndMapsTester
+{
+    public static void Run()
+    {
         // Problem 1: Find Pairs with Sets
         Console.WriteLine("\n=========== Finding Pairs TESTS ===========");
         DisplayPairs(new[] { "am", "at", "ma", "if", "fi" });
@@ -107,10 +109,40 @@ public static class SetsAndMapsTester {
     /// that there were no duplicates) and therefore should not be displayed.
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
-    private static void DisplayPairs(string[] words) {
+    private static void DisplayPairs(string[] words)
+    {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
+        var originals = new HashSet<string>();
+        var pairCount = 0;
+
+        foreach (var word in words)
+        {
+            char[] strArray = word.ToCharArray();
+            Array.Reverse(strArray);
+            string pair = new string(strArray);
+            if (originals.Contains(word))
+            {
+
+            }
+            else
+            {
+                if (originals.Contains(pair))
+                {
+                    Console.WriteLine($"{word} & {pair}");
+                    pairCount++;
+                }
+                else
+                {
+                    originals.Add(word);
+                }
+            }
+        }
+        if (pairCount == 0)
+        {
+            Console.WriteLine("There are no pairs");
+        }
     }
 
     /// <summary>
@@ -127,45 +159,129 @@ public static class SetsAndMapsTester {
     /// #############
     /// # Problem 2 #
     /// #############
-    private static Dictionary<string, int> SummarizeDegrees(string filename) {
+    private static Dictionary<string, int> SummarizeDegrees(string filename)
+    {
+        
         var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename)) {
-            var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
-        }
 
+        foreach (var line in File.ReadLines(filename))
+        {
+            var fields = line.Split(",");
+            var keyX = fields[3];
+            // Todo Problem 2 - ADD YOUR CODE HERE
+            if (!degrees.ContainsKey($"{keyX}")){
+                degrees.Add(keyX , 1);
+            }
+            else{
+                degrees[keyX] += 1;
+            }
+        }
         return degrees;
     }
 
-    /// <summary>
-    /// Determine if 'word1' and 'word2' are anagrams.  An anagram
-    /// is when the same letters in a word are re-organized into a 
-    /// new word.  A dictionary is used to solve the problem.
-    /// 
-    /// Examples:
-    /// is_anagram("CAT","ACT") would return true
-    /// is_anagram("DOG","GOOD") would return false because GOOD has 2 O's
-    /// 
-    /// Important Note: When determining if two words are anagrams, you
-    /// should ignore any spaces.  You should also ignore cases.  For 
-    /// example, 'Ab' and 'Ba' should be considered anagrams
-    /// 
-    /// Reminder: You can access a letter by index in a string by 
-    /// using the [] notation.
-    /// </summary>
-    /// #############
-    /// # Problem 3 #
-    /// #############
-    private static bool IsAnagram(string word1, string word2) {
-        // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
-    }
+/// <summary>
+/// Determine if 'word1' and 'word2' are anagrams.  An anagram
+/// is when the same letters in a word are re-organized into a 
+/// new word.  A dictionary is used to solve the problem.
+/// 
+/// Examples:
+/// is_anagram("CAT","ACT") would return true
+/// is_anagram("DOG","GOOD") would return false because GOOD has 2 O's
+/// 
+/// Important Note: When determining if two words are anagrams, you
+/// should ignore any spaces.  You should also ignore cases.  For 
+/// example, 'Ab' and 'Ba' should be considered anagrams
+/// 
+/// Reminder: You can access a letter by index in a string by 
+/// using the [] notation.
+/// </summary>
+/// #############
+/// # Problem 3 #
+/// #############
+private static bool IsAnagram(string word1, string word2)
+{
+    // Todo Problem 3 - ADD YOUR CODE HERE
+    Console.WriteLine($"{word1}, {word2}" );
+    var set1 = ConvertString(word1);
+    var set2 = ConvertString(word2);
 
-    /// <summary>
-    /// Sets up the maze dictionary for problem 4
-    /// </summary>
-    private static Dictionary<ValueTuple<int, int>, bool[]> SetupMazeMap() {
-        Dictionary<ValueTuple<int, int>, bool[]> map = new() {
+   if(set1.Count != set2.Count){
+        return false;
+    } else {
+        var keys1 = GetLetterSet(set1);
+        var keys2 = GetLetterSet(set2);
+        var values1 = GetValueSet(set1);
+        var values2 = GetValueSet(set2);
+        if (keys1.SetEquals(keys2)){
+            if(values1.SetEquals(values2)){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+    
+}
+
+private static Dictionary<string, int> ConvertString(string word){
+    var set = new Dictionary<string, int>();
+
+    char[] strArray = word.ToCharArray();
+    foreach (var character in strArray)
+    {
+        var letter = character.ToString().ToLower();
+        if(letter != " "){
+            if (!set.ContainsKey(letter)){
+                set.Add(letter, 1);
+            } else {
+                set[letter] += 1;
+            }
+        }
+    }
+    return set;
+}
+
+private static HashSet<string> GetLetterSet(Dictionary<string, int> set){
+    var letterSet = new  HashSet<string>();
+
+    foreach (KeyValuePair<string, int> kvp in set)
+    {
+        if (!letterSet.Contains(kvp.Key)){
+            letterSet.Add(kvp.Key);
+        }
+       
+    }
+    //Console.WriteLine(String.Join(",", letterSet));
+    return letterSet;   
+}
+
+private static HashSet<int> GetValueSet(Dictionary<string, int> set){
+    var valueSet = new  HashSet<int>();
+
+    foreach (KeyValuePair<string, int> kvp in set)
+    {
+        if (!valueSet.Contains(kvp.Value)){
+            valueSet.Add(kvp.Value);
+        }
+       
+    }
+    //Console.WriteLine(String.Join(",", valueSet));
+    return valueSet;
+    
+}
+
+
+
+
+
+/// <summary>
+/// Sets up the maze dictionary for problem 4
+/// </summary>
+private static Dictionary<ValueTuple<int, int>, bool[]> SetupMazeMap()
+{
+    Dictionary<ValueTuple<int, int>, bool[]> map = new() {
             { (1, 1), new[] { false, true, false, true } },
             { (1, 2), new[] { false, true, true, false } },
             { (1, 3), new[] { false, false, false, false } },
@@ -203,37 +319,39 @@ public static class SetsAndMapsTester {
             { (6, 5), new[] { false, false, false, false } },
             { (6, 6), new[] { true, false, false, false } }
         };
-        return map;
-    }
+    return map;
+}
 
-    /// <summary>
-    /// This function will read JSON (Javascript Object Notation) data from the 
-    /// United States Geological Service (USGS) consisting of earthquake data.
-    /// The data will include all earthquakes in the current day.
-    /// 
-    /// JSON data is organized into a dictionary. After reading the data using
-    /// the built-in HTTP client library, this function will print out a list of all
-    /// earthquake locations ('place' attribute) and magnitudes ('mag' attribute).
-    /// Additional information about the format of the JSON data can be found 
-    /// at this website:  
-    /// 
-    /// https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-    /// 
-    /// </summary>
-    private static void EarthquakeDailySummary() {
-        const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
-        using var client = new HttpClient();
-        using var getRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
-        using var jsonStream = client.Send(getRequestMessage).Content.ReadAsStream();
-        using var reader = new StreamReader(jsonStream);
-        var json = reader.ReadToEnd();
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+/// <summary>
+/// This function will read JSON (Javascript Object Notation) data from the 
+/// United States Geological Service (USGS) consisting of earthquake data.
+/// The data will include all earthquakes in the current day.
+/// 
+/// JSON data is organized into a dictionary. After reading the data using
+/// the built-in HTTP client library, this function will print out a list of all
+/// earthquake locations ('place' attribute) and magnitudes ('mag' attribute).
+/// Additional information about the format of the JSON data can be found 
+/// at this website:  
+/// 
+/// https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+/// 
+/// </summary>
+private static void EarthquakeDailySummary()
+{
+   /*const string uri = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson";
+    using var client = new HttpClient();
+    using var getRequestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+    using var jsonStream = client.Send(getRequestMessage).Content.ReadAsStream();
+    using var reader = new StreamReader(jsonStream);
+    var json = reader.ReadToEnd();
+    //Console.Write(json);
+    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+    var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);*/
 
-        var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
-
-        // TODO:
-        // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
-        // on those classes so that the call to Deserialize above works properly.
-        // 2. Add code below to print out each place a earthquake has happened today and its magitude.
-    }
+    // TODO:
+    // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
+    // on those classes so that the call to Deserialize above works properly.
+    // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+    
+}
 }

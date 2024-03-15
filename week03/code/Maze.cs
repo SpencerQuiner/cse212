@@ -30,6 +30,14 @@ public class Maze {
     /// </summary>
     public void MoveLeft() {
         // FILL IN CODE
+         ValueTuple<int,int> key = (_currX,_currY);
+        if (_mazeMap[key][0] == true )
+        {
+            _currX-=1;
+            ShowStatus();
+        } else {
+            Console.WriteLine("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -38,6 +46,14 @@ public class Maze {
     /// </summary>
     public void MoveRight() {
         // FILL IN CODE
+         ValueTuple<int,int> key = (_currX ,_currY);
+        if (_mazeMap[key][1] == true  )
+        {
+            _currX+=1;
+            ShowStatus();
+        } else {
+            Console.WriteLine("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -46,6 +62,14 @@ public class Maze {
     /// </summary>
     public void MoveUp() {
         // FILL IN CODE
+        ValueTuple<int,int> key = (_currX ,_currY);
+        if (_mazeMap[key][2] == true )
+        {
+            _currY-=1;
+            ShowStatus();
+        } else {
+            Console.WriteLine("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -54,6 +78,14 @@ public class Maze {
     /// </summary>
     public void MoveDown() {
         // FILL IN CODE
+        ValueTuple<int,int> key = (_currX ,_currY);
+        if (_mazeMap[key][3] == true )
+        {
+            _currY+=1;
+            ShowStatus();
+        } else {
+            Console.WriteLine("Can't go that way!");
+        }
     }
 
     public void ShowStatus() {
