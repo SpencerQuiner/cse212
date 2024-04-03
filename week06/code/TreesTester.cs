@@ -27,6 +27,7 @@ public static class TreesTester {
         Console.WriteLine(tree.Contains(9)); // False
 
         Console.WriteLine("\n=========== PROBLEM 3 TESTS ===========");
+        
         foreach (var value in tree.Reverse()) {
             Console.WriteLine(value); // 10, 7, 6, 5, 4, 3, 1
         }
@@ -98,5 +99,16 @@ public static class TreesTester {
     /// <param name="bst">the BinarySearchTree in which to insert the values</param>
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst) {
         // TODO Start Problem 5
+        if (first > last){
+            return;
+        } else {
+        int middleIndex = (first + last) / 2;
+        //Console.WriteLine(middleIndex);
+        int middleValue = sortedNumbers[middleIndex];
+        bst.Insert(middleValue);
+        InsertMiddle(sortedNumbers,first, middleIndex-1,bst);
+        InsertMiddle(sortedNumbers,middleIndex+1,last,bst);
+        }
+        
     }
 }
